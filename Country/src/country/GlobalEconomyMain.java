@@ -22,28 +22,20 @@ public class GlobalEconomyMain {
   private static final int QUIT = 6;
   private static final int EDIT_COUNTRY_INFORMATION =7;
 	
-	
-	private String name;
-	private double population;
-	private double GDP;
-  
+
 	public GlobalEconomyMain() {
-		final int MAX_COUNTRIES = 5;
-		this.countries = new Country[MAX_COUNTRIES];
+        this.allCountries = new ArrayList<>();
 		this.registeredCountries = 0;
 	}
-	
-	
-	public Country retrieveCountry(String countryName) {
-		for (int i = 0; i < this.countries.length; i++) {
-			if(countries[i] != null && countries[i].getName().equals( countryName)) {
-				return countries[i];
-			}
-			
-		}
-		
-		return null;
-	}
+
+    public Country retrieveCountry(String countryName){
+        for (Country currentCountry: this.allCountries){
+            if(currentCountry.getName().equals(name)){
+                return currentCountry;
+            }
+        }
+        return null;
+    }
 	
 	public Country createCountry() {		
 		
@@ -59,9 +51,103 @@ public class GlobalEconomyMain {
 		Country newCountry = new Country (name,GDP,population);
 		
 		return newCountry; 
-	}	
-	
-	public void run() {
+	}
+
+    public void printOneCountry() {
+        String countryName = readCountryName();
+
+        Country foundCountry = retrieveCountry(countryName);
+
+        if (foundCountry != null ) {System.out.println(foundCountry);}
+        else {System.out.println("Error: "+countryName +" is not registered.");}
+    }
+
+    public void printAllCountries() {
+
+        for (Country currentCountry: this.allCountries){
+            if(currentCountry != null){
+
+                System.out.println(currentCountry);
+            }
+        }
+    }
+
+    /*
+     * This method only reads a String that here, will be the name
+     * of a country that you want to use
+     * (for printing, injecting money, paying debt, etc.)
+     */
+    public String readCountryName() {
+        System.out.print("Type the name of the country that you want to use: ");
+        String countryName = input.nextLine();
+        return countryName;
+    }
+
+    public void injectMoney() {
+        String countryName = readCountryName();
+        Country foundCountry = retrieveCountry(countryName);
+        if (foundCountry== null) {System.out.println("Error: "+countryName +" is not registered.");}
+        else {
+            System.out.println("Enter the amount you want to inject");
+            double amountInj = input.nextDouble();
+            input.nextLine();
+            foundCountry.injectMoney(amountInj);
+            if (amountInj>0) {
+                System.out.println(countryName +" new GDP is "+ foundCountry.GDP);}
+        }
+    }
+
+    public void payDebt() {
+        String countryName = readCountryName();
+        Country foundCountry = retrieveCountry(countryName);
+        if (foundCountry== null) {System.out.println("Error: "+countryName +" is not registered.");}
+        else {
+            System.out.println("Enter the amount you want to pay");
+            double amountDebt = input.nextDouble();
+            input.nextLine();
+            foundCountry.payDebt(amountDebt);
+            if (amountDebt>0 && amountDebt<GDP) {
+                System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
+            }
+        }
+    }
+
+
+    public void editInfo() {
+
+        String countryName = readCountryName();
+        Country foundCountry = retrieveCountry(countryName);
+        if (foundCountry!= null) {
+            System.out.println(" Please choose an option. ");
+            System.out.println("1. Change a country's name.");
+            System.out.println("2. Change a country's population.");
+
+            int optionNum = input.nextInt();
+            input.nextLine();
+
+            if (optionNum == 1) {
+                System.out.println("Enter the country's new name. ");
+                String newCountryName = input.nextLine();
+                foundCountry.setName(newCountryName);
+                System.out.println("The country's new name is: "+ newCountryName);
+            }
+
+            else if (optionNum == 2 ) {
+                System.out.println("Enter the country's new population. ");
+                double newPopulation = input.nextDouble();
+                foundCountry.setPopulation(newPopulation);
+                System.out.println("The country's new population is: "+ newPopulation);
+
+            }
+
+            else {System.out.println("This is not a valid choice. ");}
+
+        }
+        else {System.out.println("Error: "+countryName +" is not registered.");}
+    }
+
+
+    public void run() {
 		
 		int option;
 		do {
@@ -76,10 +162,11 @@ public class GlobalEconomyMain {
 			case REGISTER_COUNTRY:
 				
 				Country newCountry = createCountry();
-				this.countries[registeredCountries] = newCountry;
-				this.registeredCountries = this.registeredCountries + 1;
-				
-				break;
+
+                this.allCountries.add(newCountry);
+
+
+                break;
 	
 			case PRINT_COUNTRIES:
 				printAllCountries();
@@ -183,7 +270,7 @@ public class GlobalEconomyMain {
 		System.out.println(" 7. Quit this program. ");
 		System.out.println();
 	}
-
+  
 	public void printAllCountries() {
 		for (int i=0; i<5 ; i++) {
 		if( countries[i] != null ) {System.out.println(countries[i]);}
