@@ -1,7 +1,6 @@
 package country;
 
 public class Country {
-
   // private instance variables
   String name;
   double GDP;
