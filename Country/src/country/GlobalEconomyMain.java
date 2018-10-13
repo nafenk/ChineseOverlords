@@ -12,7 +12,7 @@ public class GlobalEconomyMain {
 
 	private Country[] countries;
 	private int registeredCountries;
-	private Scanner input;
+	IO io = new IO();
 
   private static final int REGISTER_COUNTRY = 1;
   private static final int PRINT_COUNTRIES = 2;
@@ -31,7 +31,6 @@ public class GlobalEconomyMain {
 		final int MAX_COUNTRIES = 5;
 		this.countries = new Country[MAX_COUNTRIES];
 		this.registeredCountries = 0;
-		input = new Scanner(System.in);
 	}
 	
 	
@@ -48,14 +47,15 @@ public class GlobalEconomyMain {
 	
 	public Country createCountry() {		
 		
-		System.out.println("Please enter the country's name");
-		name = input.nextLine();
+		System.out.println("Please entre the country's name");
+		name = io.readString();
 		
-		System.out.println("Please enter the country's population");
-		population = input.nextDouble();
+		System.out.println("Please entre the country's population");
+		population =io.readDouble();
 		
-		System.out.println("Please enter the country's GDP");
-		GDP = input.nextDouble();
+		System.out.println("Please entre the country's GDP");
+		GDP = io.readDouble();
+
 		Country newCountry = new Country (name,GDP,population);
 		
 		return newCountry; 
@@ -68,10 +68,9 @@ public class GlobalEconomyMain {
 			printMenuOptions();
 			System.out.print(" Type the option number: ");
 			
-			option = input.nextInt();
-			input.nextLine(); //this skips the enter 
-							  //that the user types after 
-							  //typing the integer option.
+			option = io.readInt(); //Using an IO class we don't need to have
+								  //a scan next line in our main
+								 //and make it look more clean
 			
 			switch (option) {
 			case REGISTER_COUNTRY:
@@ -99,8 +98,11 @@ public class GlobalEconomyMain {
 				break;
 	
 			case QUIT:
-				System.out.println("Thank you for using Global Economy Solutions. See you soon!");
-				System.out.println();
+				io.printGoodBye(); //Example on how we can use IO for printing messages.
+				io.printLine();
+				//System.out.println("Thank you for using Global Economy Solutions. See you soon!");
+				//System.out.println();
+          
 				break;
 				
 			case EDIT_COUNTRY_INFORMATION:
@@ -114,6 +116,7 @@ public class GlobalEconomyMain {
 			}
 		} while (option != QUIT);
 	}
+
 
   public void run() {
     int option;
@@ -181,22 +184,6 @@ public class GlobalEconomyMain {
 		System.out.println();
 	}
 
-
-  public Country createCountry() {
-
-    System.out.println("Please entre the country's name");
-    name = input.nextLine();
-
-    System.out.println("Please entre the country's population");
-    population = input.nextDouble();
-
-    System.out.println("Please entre the country's GDP");
-    GDP = input.nextDouble();
-
-    return new Country (name,GDP,population);
-  }
-
-
 	public void printAllCountries() {
 		for (int i=0; i<5 ; i++) {
 		if( countries[i] != null ) {System.out.println(countries[i]);}
@@ -215,8 +202,20 @@ public class GlobalEconomyMain {
 		  System.out.println("Error: " + countryName + " not registered.");
 		}
 	}
-
-
+		
+	}
+	
+	
+	/*
+	 * This method only reads a String that here, will be the name
+	 * of a country that you want to use 
+	 * (for printing, injecting money, paying debt, etc.) 
+	 */
+	public String readCountryName() {
+		System.out.print("Type the name of the country that you want to use: ");
+		String countryName = io.readString();
+		return countryName;
+	}
   public Country retrieveCountry(String countryName) {
     for (Country country : this.countries) {
       if (country != null && country.getName().equals(countryName)) {
@@ -227,7 +226,6 @@ public class GlobalEconomyMain {
     return null;
   }
 
-
 	public void injectMoney() {
 		String countryName = readCountryName();		
 		Country foundCountry = retrieveCountry(countryName);
@@ -236,77 +234,57 @@ public class GlobalEconomyMain {
 		  System.out.println("Error: " + countryName + " not registered.");
 		} else {
 		 System.out.println("Enter the amount you want to inject");
-		 double amountInj = input.nextDouble();
-		 input.nextLine();
-
+		 double amountInj = io.readDouble();
 		 foundCountry.injectMoney(amountInj);
 		 if (amountInj > 0) {
 		 System.out.println(countryName + " new GDP is " + foundCountry.GDP);}
 		}
 	}
-
-  public void payDebt() {
-    String countryName = readCountryName();
-    Country foundCountry = retrieveCountry(countryName);
-    if (foundCountry== null) {
-      System.out.println("Error: "+countryName +" is not registered.");
-    } else {
-      System.out.println("Enter the amount you want to pay");
-      double amountDebt = input.nextDouble();
-      input.nextLine();
-
-      foundCountry.payDebt(amountDebt);
-      if (amountDebt > 0 && amountDebt < GDP) {
-        System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
-      }
-    }
-	}
-
-
-  public void editInfo() {
-    String countryName = readCountryName();
-    Country foundCountry = retrieveCountry(countryName);
-
-    if (foundCountry!= null) {
-      System.out.println(" Please choose an option. ");
-      System.out.println("1. Change a country's name.");
-      System.out.println("2. Change a country's population.");
-
-      int optionNum = input.nextInt();
-      input.nextLine();
-
-      if (optionNum == 1) {
-        System.out.println("Enter the country's new name. ");
-        String newCountryName = input.nextLine();
-        foundCountry.setName(newCountryName);
-        System.out.println("The country's new name is: " + newCountryName);
-      }
-      else if (optionNum == 2 ) {
-        System.out.println("Enter the country's new population. ");
-        double newPopulation = input.nextDouble();
-        foundCountry.setPopulation(newPopulation);
-        System.out.println("The country's new population is: " + newPopulation);
-
-      } else {
-        System.out.println("This is not a valid choice. ");
-      }
-
-    } else {
-      System.out.println("Error: " + countryName + " is not registered.");
-    }
-  }
-
-
-  /*
-   * This method only reads a String that here, will be the name
-   * of a country that you want to use
-   * (for printing, injecting money, paying debt, etc.)
-   */
-  public String readCountryName() {
-    System.out.print("Type the name of the country that you want to use: ");
-    return input.nextLine();
-  }
-
+	
+	public void payDebt() {
+		String countryName = readCountryName();		
+		Country foundCountry = retrieveCountry(countryName);
+		if (foundCountry== null) {System.out.println("Error: "+countryName +" is not registered.");}
+		else {
+		System.out.println("Enter the amount you want to pay");
+		 double amountDebt = io.readDouble();
+		 foundCountry.payDebt(amountDebt);
+		 if (amountDebt>0 && amountDebt<GDP) {
+		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
+		}}}
+	
+	
+	public void editInfo() {
+	
+		String countryName = readCountryName();	
+		 Country foundCountry = retrieveCountry(countryName);
+		 if (foundCountry!= null) {
+		System.out.println(" Please choose an option. ");
+		System.out.println("1. Change a country's name.");
+		System.out.println("2. Change a country's population.");
+		
+		int optionNum = io.readInt();
+		
+		         if (optionNum == 1) {
+			      System.out.println("Enter the country's new name. ");
+			      String newCountryName = io.readString();
+			      foundCountry.setName(newCountryName);
+			      System.out.println("The country's new name is: "+ newCountryName);
+		           } 
+		
+		         else if (optionNum == 2 ) {
+				System.out.println("Enter the country's new population. ");
+				double newPopulation = io.readDouble();
+				 foundCountry.setPopulation(newPopulation);
+				 System.out.println("The country's new population is: "+ newPopulation);
+				
+		           } 
+		         
+		         else {System.out.println("This is not a valid choice. ");}
+		         
+		 }
+		 else {System.out.println("Error: "+countryName +" is not registered.");}
+		 }
 	
 	public static void main(String[] args) {		
 		GlobalEconomyMain program = new GlobalEconomyMain();
