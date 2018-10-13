@@ -1,6 +1,3 @@
-
-import java.util.Scanner;
-
 public class GlobalEconomyMain {
 	
 	private static final int REGISTER_COUNTRY = 1;
@@ -13,7 +10,7 @@ public class GlobalEconomyMain {
 		
 	private Country[] countries;
 	private int registeredCountries;
-	private Scanner input;
+	IO io = new IO();
 	
 	
 	String name;
@@ -26,7 +23,6 @@ public class GlobalEconomyMain {
 		final int MAX_COUNTRIES = 5;
 		this.countries = new Country[MAX_COUNTRIES];
 		this.registeredCountries = 0;
-		input = new Scanner(System.in);
 	}
 	
 	
@@ -44,13 +40,13 @@ public class GlobalEconomyMain {
 	public Country createCountry() {		
 		
 		System.out.println("Please entre the country's name");
-		name = input.nextLine();
+		name = io.readString();
 		
 		System.out.println("Please entre the country's population");
-		population = input.nextDouble();
+		population =io.readDouble();
 		
 		System.out.println("Please entre the country's GDP");
-		GDP = input.nextDouble();
+		GDP = io.readDouble();
 		Country newCountry = new Country (name,GDP,population);
 		
 		return newCountry; 
@@ -63,10 +59,9 @@ public class GlobalEconomyMain {
 			printMenuOptions();
 			System.out.print(" Type the option number: ");
 			
-			option = input.nextInt();
-			input.nextLine(); //this skips the enter 
-							  //that the user types after 
-							  //typing the integer option.
+			option = io.readInt(); //Using an IO class we don't need to have
+								  //a scan next line in our main
+								 //and make it look more clean
 			
 			switch (option) {
 			case REGISTER_COUNTRY:
@@ -94,8 +89,10 @@ public class GlobalEconomyMain {
 				break;
 	
 			case QUIT:
-				System.out.println("Thank you for using Global Economy Solutions. See you soon!");
-				System.out.println();
+				io.printGoodBye(); //Example on how we can use IO for printing messages.
+				io.printLine();
+				//System.out.println("Thank you for using Global Economy Solutions. See you soon!");
+				//System.out.println();
 				break;
 				
 			case EDIT_COUNTRY_INFORMATION:
@@ -155,7 +152,7 @@ public class GlobalEconomyMain {
 	 */
 	public String readCountryName() {
 		System.out.print("Type the name of the country that you want to use: ");
-		String countryName = input.nextLine();
+		String countryName = io.readString();
 		return countryName;
 	}
 
@@ -165,8 +162,7 @@ public class GlobalEconomyMain {
 		if (foundCountry== null) {System.out.println("Error: "+countryName +" is not registered.");}
 		else {
 		 System.out.println("Enter the amount you want to inject");
-		 double amountInj = input.nextDouble();
-		 input.nextLine();
+		 double amountInj = io.readDouble();
 		 foundCountry.injectMoney(amountInj);
 		 if (amountInj>0) {
 		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);}
@@ -179,8 +175,7 @@ public class GlobalEconomyMain {
 		if (foundCountry== null) {System.out.println("Error: "+countryName +" is not registered.");}
 		else {
 		System.out.println("Enter the amount you want to pay");
-		 double amountDebt = input.nextDouble();
-		 input.nextLine();
+		 double amountDebt = io.readDouble();
 		 foundCountry.payDebt(amountDebt);
 		 if (amountDebt>0 && amountDebt<GDP) {
 		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
@@ -196,19 +191,18 @@ public class GlobalEconomyMain {
 		System.out.println("1. Change a country's name.");
 		System.out.println("2. Change a country's population.");
 		
-		int optionNum = input.nextInt();
-		input.nextLine();
+		int optionNum = io.readInt();
 		
 		         if (optionNum == 1) {
 			      System.out.println("Enter the country's new name. ");
-			      String newCountryName = input.nextLine();
+			      String newCountryName = io.readString();
 			      foundCountry.setName(newCountryName);
 			      System.out.println("The country's new name is: "+ newCountryName);
 		           } 
 		
 		         else if (optionNum == 2 ) {
 				System.out.println("Enter the country's new population. ");
-				double newPopulation = input.nextDouble();
+				double newPopulation = io.readDouble();
 				 foundCountry.setPopulation(newPopulation);
 				 System.out.println("The country's new population is: "+ newPopulation);
 				
