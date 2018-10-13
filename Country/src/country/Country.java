@@ -1,12 +1,16 @@
+package country;
+
 import java.util.ArrayList;
 
 public class Country {
-	private String name;
-	private double GDP;
+	protected String name;
+	protected double GDP;
 	private double population;
+	private double amountInj;
+	private double amountDebt;
 	private static final int CLASS_CONS1 = 1000;
 	private static final int CLASS_CONS2 = 10000;
-	public final String END_OF_LINE = System.lineSeparator();
+	private final String END_OF_LINE = System.lineSeparator();
 	
 	private ArrayList<City> cities;
 	private City capital;
@@ -69,23 +73,16 @@ public class Country {
 	}
 
 	public double gdpPerCapita() {
-
 		double gdpCap;
 		gdpCap = GDP / population;
 		return gdpCap;
 	}
 
 	public String getClassification() {
-
-		String classification = "";
-		if (gdpPerCapita() >= CLASS_CONS2) {
-			classification = "Developed country";
-		} else if ((gdpPerCapita() >= CLASS_CONS1) && (CLASS_CONS2 > gdpPerCapita())) {
-			classification = "Economy in transition";
-		} else if (gdpPerCapita() < CLASS_CONS1) {
-			classification = "Developing country";
-		}
-
+		String classification="";
+		if (gdpPerCapita()>= CLASS_CONS2) {classification="Developed country";}
+		else if ((gdpPerCapita()>= CLASS_CONS1)&&(CLASS_CONS2 > gdpPerCapita())) {classification="Economy in transition";}
+		else if (gdpPerCapita()< CLASS_CONS1) {classification="Developing country";}		
 		return classification;
 	}
 
@@ -111,13 +108,11 @@ public class Country {
 
 	@Override
 	public String toString() {
-
 		String print = this.name + " : ( " + getClassification() + " )" + END_OF_LINE;
 		print += "Population : " + getPopulation() + END_OF_LINE;
 		print += "GDP : " + getGDP() + END_OF_LINE;
 		print += gdpPerCapita() + "GDP per capita ." + END_OF_LINE;
 		print += "    ";
-
 		return print;
 	}
 
