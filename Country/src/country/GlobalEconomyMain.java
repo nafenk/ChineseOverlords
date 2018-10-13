@@ -250,7 +250,7 @@ public class GlobalEconomyMain {
 		 double amountDebt = io.readDouble();
 		 foundCountry.payDebt(amountDebt);
 		 if (amountDebt>0 && amountDebt<GDP) {
-		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
+		 System.out.println(countryName +" new GDP is "+ foundCountry.getGDP());
 		}}}
 	
 	
