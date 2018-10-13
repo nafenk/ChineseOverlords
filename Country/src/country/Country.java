@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Country {
 	private String name;
@@ -6,11 +7,17 @@ public class Country {
 	private static final int CLASS_CONS1 = 1000;
 	private static final int CLASS_CONS2 = 10000;
 	public final String END_OF_LINE = System.lineSeparator();
+	
+	private ArrayList<City> cities;
+	private City capital;
 
-	Country(String name, double GDP, double population) {
+	Country(String name, double GDP, double population, String capital) {
 		this.name = name;
 		this.GDP = GDP;
 		this.population = population;
+		
+		this.cities = new ArrayList<>();
+		this.capital = new City(capital);
 	}
 
 	public String getName() {
@@ -31,6 +38,29 @@ public class Country {
 	public void setName(String newname) {
 
 		this.name = newname;
+	}
+	
+	public String getAllCities() {
+		
+		String output = "";
+		
+		for(City city : cities) {
+			
+			output += city;
+			output += END_OF_LINE;
+		}
+		
+		return output;
+	}
+	
+	public City getCapital() {
+		
+		return this.capital;
+	}
+	
+	public void setCapital(City newCapital) {
+		
+		this.capital = newCapital;
 	}
 
 	public void setPopulation(double newpopulation) {

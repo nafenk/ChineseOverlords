@@ -15,9 +15,6 @@ public class GlobalEconomyMain {
 	private int registeredCountries;
 	private Scanner input;
 	
-	
-	private String name;
-	private double population;
 	private double GDP;
 
 	public GlobalEconomyMain() {
@@ -42,14 +39,18 @@ public class GlobalEconomyMain {
 	public Country createCountry() {		
 		
 		System.out.println("Please entre the country's name");
-		name = input.nextLine();
+		String name = input.nextLine();
 		
 		System.out.println("Please entre the country's population");
-		population = input.nextDouble();
+		int population = input.nextInt();
 		
 		System.out.println("Please entre the country's GDP");
-		GDP = input.nextDouble();
-		Country newCountry = new Country (name,GDP,population);
+		double GDP = input.nextDouble();
+		
+		System.out.println("Please enter the capital of the country");
+		String capital = input.nextLine();
+		
+		Country newCountry = new Country (name,GDP, population, capital);
 		
 		return newCountry; 
 	}	
