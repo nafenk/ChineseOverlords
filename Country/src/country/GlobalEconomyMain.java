@@ -23,6 +23,10 @@ public class GlobalEconomyMain {
   private static final int EDIT_COUNTRY_INFORMATION =7;
 	
 	
+	private String name;
+	private double population;
+	private double GDP;
+  
 	public GlobalEconomyMain() {
 		final int MAX_COUNTRIES = 5;
 		this.countries = new Country[MAX_COUNTRIES];
@@ -51,6 +55,7 @@ public class GlobalEconomyMain {
 		
 		System.out.println("Please entre the country's GDP");
 		GDP = io.readDouble();
+
 		Country newCountry = new Country (name,GDP,population);
 		
 		return newCountry; 
@@ -97,6 +102,7 @@ public class GlobalEconomyMain {
 				io.printLine();
 				//System.out.println("Thank you for using Global Economy Solutions. See you soon!");
 				//System.out.println();
+          
 				break;
 				
 			case EDIT_COUNTRY_INFORMATION:
@@ -111,6 +117,57 @@ public class GlobalEconomyMain {
 		} while (option != QUIT);
 	}
 
+
+  public void run() {
+    int option;
+
+    do {
+      printMenuOptions();
+      System.out.print(" Type the option number: ");
+
+      option = input.nextInt();
+      input.nextLine(); // eat \n character
+
+      switch (option) {
+        case REGISTER_COUNTRY:
+          Country newCountry = createCountry();
+          this.countries[registeredCountries] = newCountry;
+          this.registeredCountries = this.registeredCountries + 1;
+          break;
+
+        case PRINT_COUNTRIES:
+          printAllCountries();
+          break;
+
+        case PRINT_COUNTRY:
+          printOneCountry();
+          break;
+
+        case INJECT_MONEY:
+          injectMoney();
+          break;
+
+        case PAY_DEBT:
+          payDebt();
+          break;
+
+        case EDIT_COUNTRY_INFORMATION:
+          editInfo();
+          break;
+
+        case QUIT:
+          System.out.println("Thank you for using Global Economy Solutions. See you soon!");
+          System.out.println();
+          break;
+
+        default:
+          System.out.println("Option "+option+" is not valid.");
+          System.out.println();
+          break;
+      }
+    } while (option != QUIT);
+  }
+
 	//This method is private because it should be used only by
 	// this class since the menu is specific to this main.
 	private void printMenuOptions() {
@@ -122,8 +179,8 @@ public class GlobalEconomyMain {
 		System.out.println(" 3. Print a country's information. ");
 		System.out.println(" 4. Inject money to a country. ");
 		System.out.println(" 5. Pay a country's debt. ");
-		System.out.println(" 6. Quit this program. ");
-		System.out.println(" 7. Edit a country's information. ");
+		System.out.println(" 6. Edit a country's information. ");
+		System.out.println(" 7. Quit this program. ");
 		System.out.println();
 	}
 
