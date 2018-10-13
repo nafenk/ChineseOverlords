@@ -23,6 +23,10 @@ public class GlobalEconomyMain {
   private static final int EDIT_COUNTRY_INFORMATION =7;
 	
 	
+	private String name;
+	private double population;
+	private double GDP;
+  
 	public GlobalEconomyMain() {
 		final int MAX_COUNTRIES = 5;
 		this.countries = new Country[MAX_COUNTRIES];
@@ -31,6 +35,86 @@ public class GlobalEconomyMain {
 	}
 	
 	
+	public Country retrieveCountry(String countryName) {
+		for (int i = 0; i < this.countries.length; i++) {
+			if(countries[i] != null && countries[i].getName().equals( countryName)) {
+				return countries[i];
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	public Country createCountry() {		
+		
+		System.out.println("Please enter the country's name");
+		name = input.nextLine();
+		
+		System.out.println("Please enter the country's population");
+		population = input.nextDouble();
+		
+		System.out.println("Please enter the country's GDP");
+		GDP = input.nextDouble();
+		Country newCountry = new Country (name,GDP,population);
+		
+		return newCountry; 
+	}	
+	
+	public void run() {
+		
+		int option;
+		do {
+			printMenuOptions();
+			System.out.print(" Type the option number: ");
+			
+			option = input.nextInt();
+			input.nextLine(); //this skips the enter 
+							  //that the user types after 
+							  //typing the integer option.
+			
+			switch (option) {
+			case REGISTER_COUNTRY:
+				
+				Country newCountry = createCountry();
+				this.countries[registeredCountries] = newCountry;
+				this.registeredCountries = this.registeredCountries + 1;
+				
+				break;
+	
+			case PRINT_COUNTRIES:
+				printAllCountries();
+				break;
+	
+			case PRINT_COUNTRY:
+				printOneCountry();				
+				break;
+	
+			case INJECT_MONEY:
+				injectMoney();
+				break;
+	
+			case PAY_DEBT:
+				payDebt();
+				break;
+	
+			case QUIT:
+				System.out.println("Thank you for using Global Economy Solutions. See you soon!");
+				System.out.println();
+				break;
+				
+			case EDIT_COUNTRY_INFORMATION:
+				editInfo();
+				break;
+	
+			default:
+				System.out.println("Option "+option+" is not valid.");
+				System.out.println();
+				break;
+			}
+		} while (option != QUIT);
+	}
+
   public void run() {
     int option;
 
@@ -92,8 +176,8 @@ public class GlobalEconomyMain {
 		System.out.println(" 3. Print a country's information. ");
 		System.out.println(" 4. Inject money to a country. ");
 		System.out.println(" 5. Pay a country's debt. ");
-		System.out.println(" 6. Quit this program. ");
-		System.out.println(" 7. Edit a country's information. ");
+		System.out.println(" 6. Edit a country's information. ");
+		System.out.println(" 7. Quit this program. ");
 		System.out.println();
 	}
 
