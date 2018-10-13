@@ -16,11 +16,9 @@ public class GlobalEconomyMain {
 	private Scanner input;
 	
 	
-	String name;
-	double population;
-	double GDP;
-	String newCountryName;
-	
+	private String name;
+	private double population;
+	private double GDP;
 
 	public GlobalEconomyMain() {
 		final int MAX_COUNTRIES = 5;
