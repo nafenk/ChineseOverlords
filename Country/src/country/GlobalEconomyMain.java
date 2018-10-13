@@ -169,7 +169,7 @@ public class GlobalEconomyMain {
 		 input.nextLine();
 		 foundCountry.injectMoney(amountInj);
 		 if (amountInj>0) {
-		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);}
+		 System.out.println(countryName +" new GDP is "+ foundCountry.getGDP());}
 		}
 	}
 	
@@ -183,7 +183,7 @@ public class GlobalEconomyMain {
 		 input.nextLine();
 		 foundCountry.payDebt(amountDebt);
 		 if (amountDebt>0 && amountDebt<GDP) {
-		 System.out.println(countryName +" new GDP is "+ foundCountry.GDP);
+		 System.out.println(countryName +" new GDP is "+ foundCountry.getGDP());
 		}}}
 	
 	

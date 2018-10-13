@@ -1,13 +1,11 @@
 
 public class Country {
-	String name;
-	double GDP;
-	double population;
-	double amountInj;
-	double amountDebt;
+	private String name;
+	private double GDP;
+	private double population;
 	private static final int CLASS_CONS1 = 1000;
 	private static final int CLASS_CONS2 = 10000;
-	final String END_OF_LINE = System.lineSeparator();
+	public final String END_OF_LINE = System.lineSeparator();
 	
 	
 	Country (String name, double GDP, double population){
