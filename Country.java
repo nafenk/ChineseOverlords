@@ -1,14 +1,13 @@
-package country;
 
 public class Country {
-	protected String name;
-	protected double GDP;
-	private double population;
-	private double amountInj;
-	private double amountDebt;
+	String name;
+	double GDP;
+	double population;
+	double amountInj;
+	double amountDebt;
 	private static final int CLASS_CONS1 = 1000;
 	private static final int CLASS_CONS2 = 10000;
-	private final String END_OF_LINE = System.lineSeparator();
+	final String END_OF_LINE = System.lineSeparator();
 	
 	
 	Country (String name, double GDP, double population){
@@ -25,14 +24,14 @@ public class Country {
 	public double getPopulation() {
 		return population;
 	}
-	 public void setName(String newName) {
-	        this.name = newName;
+	 public void setName(String newname) {
+	        this.name = newname;
 	    }
-	    public void setPopulation(double newPopulation) {
-	        this.population = newPopulation;
+	    public void setPopulation(double newpopulation) {
+	        this.population = newpopulation;
 	    }
 	
-	public double gdpPerCapita() {
+	public double gdp_per_capita() {
 		double gdpCap;
 		gdpCap= GDP/population;
 		return gdpCap;
@@ -40,9 +39,9 @@ public class Country {
 	
 	public String getClassification() {
 		String classification="";
-		if (gdpPerCapita()>= CLASS_CONS2) {classification="Developed country";}
-		else if ((gdpPerCapita()>= CLASS_CONS1)&&(CLASS_CONS2 > gdpPerCapita())) {classification="Economy in transition";}
-		else if (gdpPerCapita()< CLASS_CONS1) {classification="Developing country";}
+		if (gdp_per_capita()>= CLASS_CONS2) {classification="Developed country";}
+		else if ((gdp_per_capita()>= CLASS_CONS1)&&(CLASS_CONS2 >gdp_per_capita())) {classification="Economy in transition";}
+		else if (gdp_per_capita()< CLASS_CONS1) {classification="Developing country";}
 		
 		return classification;
 	}
@@ -63,7 +62,7 @@ public class Country {
 		String print = this.name + " : ( "+ getClassification() + " )" +END_OF_LINE;
 		print+= "Population : "+ getPopulation() + END_OF_LINE;
 		print+= "GDP : "+ getGDP() + END_OF_LINE;
-		print+= gdpPerCapita() + "GDP per capita ."+ END_OF_LINE;
+		print+=gdp_per_capita() + "GDP per capita ."+ END_OF_LINE;
 		print+= "    ";
 		
 	return print;
