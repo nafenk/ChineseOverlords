@@ -8,18 +8,18 @@ public class GlobalEconomyMain {
 	private static final int PRINT_COUNTRY = 3;
 	private static final int INJECT_MONEY = 4;
 	private static final int PAY_DEBT = 5;
-	private static final int QUIT = 6;
-	private static final int EDIT_COUNTRY_INFORMATION =7;
+	private static final int EDIT_COUNTRY_INFORMATION =6;
+	private static final int QUIT = 7;
 		
 	private Country[] countries;
 	private int registeredCountries;
 	private Scanner input;
 	
 	
-	String name;
-	double population;
-	double GDP;
-	String newCountryName;
+	private String name;
+	private double population;
+	private double GDP;
+
 	
 
 	public GlobalEconomyMain() {
@@ -43,13 +43,13 @@ public class GlobalEconomyMain {
 	
 	public Country createCountry() {		
 		
-		System.out.println("Please entre the country's name");
+		System.out.println("Please enter the country's name");
 		name = input.nextLine();
 		
-		System.out.println("Please entre the country's population");
+		System.out.println("Please enter the country's population");
 		population = input.nextDouble();
 		
-		System.out.println("Please entre the country's GDP");
+		System.out.println("Please enter the country's GDP");
 		GDP = input.nextDouble();
 		Country newCountry = new Country (name,GDP,population);
 		
@@ -121,8 +121,8 @@ public class GlobalEconomyMain {
 		System.out.println(" 3. Print a country's information. ");
 		System.out.println(" 4. Inject money to a country. ");
 		System.out.println(" 5. Pay a country's debt. ");
-		System.out.println(" 6. Quit this program. ");
-		System.out.println(" 7. Edit a country's information. ");
+		System.out.println(" 6. Edit a country's information. ");
+		System.out.println(" 7. Quit this program. ");
 		System.out.println();
 	}
 	
